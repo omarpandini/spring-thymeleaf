@@ -1,9 +1,13 @@
 package com.br.springthymeleaf.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Papel {
@@ -13,6 +17,16 @@ public class Papel {
 	private Long id;
 	private String papel;
 	
+	@ManyToMany(mappedBy = "papeis",fetch = FetchType.EAGER)
+	private List<Usuario>usuarios;	
+	
+	
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -24,12 +38,14 @@ public class Papel {
 	}
 	public void setPapel(String papel) {
 		this.papel = papel;
-	}
+	}	
 	
-	
-	public Papel(Long id, String papel) {
+	public Papel() {
 		super();
-		setId(id);;
+		// TODO Auto-generated constructor stub
+	}
+	public Papel(String papel) {
+		super();
 		setPapel(papel);
 	}
 	
