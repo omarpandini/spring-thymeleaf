@@ -29,6 +29,8 @@
 						<th scope="col">Nome</th>
 						<th scope="col">CPF</th>
 						<th scope="col">Dt. Nascimento</th>
+						<th scope="col">Papéis</th>
+						<th scope="col"></th>
 						<th scope="col"></th>
 						<th scope="col"></th>
 					</tr>
@@ -38,7 +40,12 @@
 						<td scope="row" th:text="${usuario.id}"></td>
 						<td scope="row" th:text="${usuario.nome}"></td>
 						<td scope="row" th:text="${usuario.cpf}"></td>
-						<td scope="row" th:text="${#dates.format(usuario.dataNascimento,'dd/MM/yyyy')}"></td>		
+						<td scope="row" th:text="${#dates.format(usuario.dataNascimento,'dd/MM/yyyy')}"></td>	
+						<td>
+						<div th:each="papeis : ${usuario.papeis}">
+							<span th:text="${papeis.papel}" ></span>
+						</div>
+						</td>	
 						<td scope="row"><a th:href="@{/usuario/admin/apagar/{id}(id=${usuario.id})}" 
 										   th:confirma-apagar="|Deseja excluir o usuário ${usuario.nome}?|"
 										   onclick="if (!confirm(this.getAttribute('confirma-apagar'))) return false"
@@ -46,6 +53,9 @@
 										</a></td>	
 						<td scope="row"><a th:href="@{/usuario/editar/{id}(id=${usuario.id})}" 										 
 							               class="btn btn-outline-primary">Editar
+										</a></td>
+						<td scope="row"><a th:href="@{/usuario/editarPapel/{id}(id=${usuario.id})}" 										 
+							               class="btn btn-outline-primary">Papéis
 										</a></td>
 						
 										

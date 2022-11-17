@@ -12,17 +12,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity
 public class Usuario {
 	
@@ -63,10 +71,23 @@ public class Usuario {
 	@JoinTable(name = "usuario_papel",
 			   joinColumns = @JoinColumn(name="usuario_id"),
 			   inverseJoinColumns = @JoinColumn(name="papel_id")
+			   
 			)
 	private List<Papel>papeis;	
 	
 	
+	@OneToMany(mappedBy = "usuario")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<HistoricoUsuario>historicosUsuario;	
+
+	public List<HistoricoUsuario> getHistoricosUsuario() {
+		return historicosUsuario;
+	}
+
+	public void setHistoricosUsuario(List<HistoricoUsuario> historicosUsuario) {
+		this.historicosUsuario = historicosUsuario;
+	}
+
 	public List<Papel> getPapeis() {
 		return papeis;
 	}

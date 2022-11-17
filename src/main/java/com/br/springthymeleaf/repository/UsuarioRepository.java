@@ -15,6 +15,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	@Query(value = "select count(*) from usuario where nome = ?1",nativeQuery = true)
 	Long verificaExisteNome(String nome);
+	
+	Usuario findByLogin(String login);
 		
 
 }
